@@ -2,9 +2,11 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neon Notes App</title>
+
+    <title>Neon Notes</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -12,269 +14,436 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <style>
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(.95);
-            }
 
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+        body{
+            background:#14141d;
+            background-image:
+            radial-gradient(circle at top left,#6d28d920,transparent 40%),
+            radial-gradient(circle at bottom right,#9333ea20,transparent 40%);
         }
 
-        .modal-animation {
-            animation: fadeIn .25s ease;
+        ::-webkit-scrollbar{
+            width:8px;
         }
+
+        ::-webkit-scrollbar-thumb{
+            background:#7c3aed;
+            border-radius:20px;
+        }
+
+        ::-webkit-scrollbar-track{
+            background:#171721;
+        }
+
     </style>
 
 </head>
 
-<body class="bg-[#171721] text-white min-h-screen px-4 py-8">
+<body class="text-white">
 
-    <div class="max-w-6xl mx-auto">
+<div class="max-w-7xl mx-auto px-4 sm:px-8 py-10">
 
-        <!-- Heading -->
+    <!-- Heading -->
+
+    <div class="text-center">
 
         <h1
-            class="text-4xl sm:text-5xl font-extrabold text-center bg-gradient-to-r from-purple-400 to-fuchsia-500 bg-clip-text text-transparent mb-10">
+        class="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-fuchsia-400 via-purple-500 to-violet-400 bg-clip-text text-transparent">
 
-            Neon Notes App
+            Neon Notes
 
         </h1>
 
-        <!-- Create Note -->
+        <p class="text-gray-400 mt-3">
 
-        <div
-            class="bg-[#1d1d2b] rounded-2xl border border-purple-500/30 p-6 shadow-[0_0_30px_rgba(168,85,247,.25)]">
+            Store your thoughts beautifully ✨
 
-            <h2 class="text-2xl font-bold text-purple-400 mb-6">
-
-                Create Note
-
-            </h2>
-
-            <form action="/create" method="POST">
-
-                <input
-                    type="text"
-                    name="title"
-                    placeholder="Enter Note Title..."
-                    required
-                    class="w-full mb-4 p-3 rounded-xl bg-[#11111a] border border-purple-500/30 outline-none focus:ring-2 focus:ring-purple-500 transition">
-
-                <textarea
-                    name="description"
-                    rows="5"
-                    placeholder="Write something..."
-                    required
-                    class="w-full mb-5 p-3 rounded-xl bg-[#11111a] border border-purple-500/30 outline-none focus:ring-2 focus:ring-purple-500 resize-none"></textarea>
-
-                <button
-                    class="w-full sm:w-auto px-7 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:scale-105 transition duration-300 shadow-lg shadow-purple-600/30">
-
-                    Create Note
-
-                </button>
-
-            </form>
-
-        </div>
-
-        <!-- Notes -->
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-
-            <% if(files.length===0){ %>
-
-                <div
-                    class="col-span-full text-center border border-dashed border-purple-500/40 rounded-2xl p-10 bg-[#1d1d2b]">
-
-                    <i class="fa-regular fa-note-sticky text-5xl text-purple-400 mb-5"></i>
-
-                    <h2 class="text-2xl font-bold text-purple-400">
-
-                        No Notes Yet
-
-                    </h2>
-
-                    <p class="text-gray-400 mt-3">
-
-                        Create your first note to get started.
-
-                    </p>
-
-                </div>
-
-            <% } else { %>
-
-                <% files.forEach(function(file){ %>
-
-                    <div
-                        class="bg-[#1d1d2b] rounded-2xl border border-purple-500/20 p-5 hover:-translate-y-1 transition duration-300 shadow-lg hover:shadow-purple-500/30">
-
-                        <div class="flex justify-between items-start gap-3">
-
-                            <h2 class="text-xl font-bold text-purple-400 break-words">
-
-                                <%= file.title %>
-
-                            </h2>
-
-                            <form
-                                action="/delete/<%= file.filename %>"
-                                method="POST"
-                                class="delete-form">
-
-                                <button
-                                    class="w-9 h-9 rounded-lg border border-red-500/30 hover:bg-red-500/20 text-red-400 transition flex items-center justify-center">
-
-                                    <i class="fa-solid fa-trash"></i>
-
-                                </button>
-
-                            </form>
-
-                        </div>
-
-                        <p
-                            class="text-gray-300 text-sm leading-6 mt-4 overflow-hidden"
-                            style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;">
-
-                            <%= file.description %>
-
-                        </p>
-
-                        <div class="mt-6 flex justify-between items-center">
-
-                            <a
-                                href="/files/<%= file.filename %>"
-                                class="text-sm px-4 py-2 rounded-lg border border-purple-500/40 hover:bg-purple-600 transition">
-
-                                Read More
-
-                            </a>
-
-                            <span class="text-xs text-gray-500">
-
-                                Keep Learning 🚀
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                <% }); %>
-
-            <% } %>
-
-        </div>
+        </p>
 
     </div>
- <!-- Delete Modal -->
-    <div id="deleteModal"
-        class="fixed inset-0 hidden items-center justify-center bg-black/70 backdrop-blur-sm z-50 px-4">
+
+
+    <!-- Stats -->
+
+    <div
+    class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
 
         <div
-            class="modal-animation w-full max-w-md bg-[#1d1d2b] rounded-2xl border border-purple-500/30 p-7 shadow-[0_0_35px_rgba(168,85,247,.35)]">
+        class="bg-[#1c1c29] border border-purple-500/30 rounded-xl px-6 py-4">
 
-            <div class="flex justify-center">
+            <p class="text-sm text-gray-400">
 
-                <div
-                    class="w-16 h-16 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center">
-
-                    <i class="fa-solid fa-trash text-red-500 text-2xl"></i>
-
-                </div>
-
-            </div>
-
-            <h2 class="text-2xl font-bold text-center mt-6">
-
-                Delete Note?
-
-            </h2>
-
-            <p class="text-gray-400 text-center mt-3 leading-7">
-
-                This note will be permanently deleted and cannot be recovered.
+                Total Notes
 
             </p>
 
-            <div class="grid grid-cols-2 gap-3 mt-8">
+            <h2 class="text-2xl font-bold text-purple-400">
 
-                <button
-                    id="cancelDelete"
-                    class="py-3 rounded-xl bg-[#2a2a3a] hover:bg-[#34344b] transition">
+                <%= files.length %>
 
-                    Cancel
+            </h2>
 
-                </button>
+        </div>
 
-                <button
-                    id="confirmDelete"
-                    class="py-3 rounded-xl bg-gradient-to-r from-red-600 to-red-500 hover:scale-105 transition shadow-lg shadow-red-500/30">
+        <div
+        class="bg-[#1c1c29] border border-purple-500/30 rounded-xl px-6 py-4">
 
-                    Delete
+            <p class="text-sm text-gray-400">
 
-                </button>
+                Status
 
-            </div>
+            </p>
+
+            <h2 class="text-green-400 font-semibold">
+
+                Active
+
+            </h2>
 
         </div>
 
     </div>
 
-    <script>
 
-        const modal = document.getElementById("deleteModal");
-        const confirmBtn = document.getElementById("confirmDelete");
-        const cancelBtn = document.getElementById("cancelDelete");
 
-        let currentForm = null;
+    <!-- Create Form -->
 
-        document.querySelectorAll(".delete-form").forEach(form => {
+    <div
+    class="mt-10 bg-[#1a1a27] border border-purple-500/30 rounded-3xl p-6 shadow-[0_0_40px_rgba(168,85,247,.2)]">
 
-            form.addEventListener("submit", function (e) {
+        <h2
+        class="text-2xl font-bold text-purple-400 mb-6">
 
-                e.preventDefault();
+            Create Note
 
-                currentForm = this;
+        </h2>
 
-                modal.classList.remove("hidden");
-                modal.classList.add("flex");
+        <form
+        action="/create"
+        method="POST">
 
-            });
+            <input
 
-        });
+            required
 
-        cancelBtn.addEventListener("click", () => {
+            type="text"
 
-            modal.classList.remove("flex");
-            modal.classList.add("hidden");
+            name="title"
 
-        });
+            placeholder="Enter note title..."
 
-        confirmBtn.addEventListener("click", () => {
+            class="w-full bg-[#101018] border border-purple-500/30 rounded-xl p-4 outline-none focus:border-purple-500 transition">
 
-            currentForm.submit();
+            <textarea
 
-        });
+            required
 
-        modal.addEventListener("click", function (e) {
+            name="description"
 
-            if (e.target === modal) {
+            rows="6"
 
-                modal.classList.remove("flex");
-                modal.classList.add("hidden");
+            placeholder="Write your thoughts..."
 
-            }
+            class="w-full bg-[#101018] border border-purple-500/30 rounded-xl p-4 outline-none focus:border-purple-500 transition resize-none mt-5"></textarea>
 
-        });
+            <button
 
-    </script>
+            class="mt-5 w-full sm:w-auto bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:scale-105 transition px-7 py-3 rounded-xl font-semibold shadow-lg shadow-purple-700/30">
+
+                <i class="fa-solid fa-plus mr-2"></i>
+
+                Create Note
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+
+    <!-- Notes -->
+
+    <div
+    class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 mt-10">
+    <% if(files.length===0){ %>
+
+<div
+class="col-span-full bg-[#1a1a27] border border-dashed border-purple-500/30 rounded-3xl p-12 text-center">
+
+    <div
+    class="w-24 h-24 mx-auto rounded-full bg-purple-500/10 flex items-center justify-center">
+
+        <i class="fa-regular fa-note-sticky text-5xl text-purple-400"></i>
+
+    </div>
+
+    <h2
+    class="text-3xl font-bold mt-6 text-purple-400">
+
+        No Notes Yet
+
+    </h2>
+
+    <p
+    class="text-gray-400 mt-3">
+
+        Create your first note and start organizing your ideas.
+
+    </p>
+
+</div>
+
+<% } else { %>
+
+<% files.forEach(function(file){ %>
+
+<div
+class="group bg-[#1b1b29] border border-purple-500/20 rounded-3xl p-5 transition duration-300 hover:-translate-y-2 hover:border-purple-500/60 hover:shadow-[0_0_35px_rgba(168,85,247,.25)]">
+
+    <!-- Title -->
+
+    <div
+    class="flex justify-between items-start gap-3">
+
+        <h2
+        class="text-xl font-bold text-purple-400 break-words">
+
+            <%= file.title %>
+
+        </h2>
+
+        <form
+        action="/delete/<%= file.filename %>"
+        method="POST"
+        class="delete-form">
+
+            <button
+
+            type="submit"
+
+            class="w-10 h-10 rounded-xl border border-red-500/30 hover:bg-red-500/20 text-red-400 transition duration-300">
+
+                <i class="fa-solid fa-trash"></i>
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- Description -->
+
+    <p
+
+    class="text-gray-300 text-sm leading-7 mt-5 overflow-hidden"
+
+    style="display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;">
+
+        <%= file.description %>
+
+    </p>
+
+
+    <!-- Footer -->
+
+    <div
+    class="flex justify-between items-center mt-7">
+
+        <a
+
+        href="/files/<%= file.filename %>"
+
+        class="inline-flex items-center gap-2 text-sm bg-gradient-to-r from-purple-600 to-fuchsia-600 px-4 py-2 rounded-xl hover:scale-105 transition">
+
+            Read More
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+        <span
+        class="text-xs text-gray-500">
+
+            Keep Learning 🚀
+
+        </span>
+
+    </div>
+
+</div>
+
+<% }) %>
+
+<% } %>
+
+</div>
+
+</div>
+<!-- Premium Delete Modal -->
+
+<div
+id="deleteModal"
+class="fixed inset-0 hidden items-center justify-center bg-black/70 backdrop-blur-md z-50 px-4">
+
+    <div
+    class="w-full max-w-md bg-[#1b1b29] border border-purple-500/30 rounded-3xl p-8 shadow-[0_0_50px_rgba(168,85,247,.35)] animate-[fadeIn_.25s_ease]">
+
+        <!-- Icon -->
+
+        <div class="flex justify-center">
+
+            <div
+            class="w-20 h-20 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center">
+
+                <i
+                class="fa-solid fa-trash text-3xl text-red-500"></i>
+
+            </div>
+
+        </div>
+
+        <!-- Heading -->
+
+        <h2
+        class="text-3xl font-bold text-center mt-6">
+
+            Delete Note?
+
+        </h2>
+
+        <!-- Text -->
+
+        <p
+        class="text-center text-gray-400 leading-7 mt-4">
+
+            This action is permanent.
+
+            Once deleted, this note cannot be recovered again.
+
+        </p>
+
+        <!-- Buttons -->
+
+        <div
+        class="grid grid-cols-2 gap-4 mt-8">
+
+            <button
+
+            id="cancelDelete"
+
+            class="py-3 rounded-xl border border-gray-600 bg-[#252535] hover:bg-[#303045] transition">
+
+                <i class="fa-solid fa-xmark mr-2"></i>
+
+                Cancel
+
+            </button>
+
+            <button
+
+            id="confirmDelete"
+
+            class="py-3 rounded-xl bg-gradient-to-r from-red-600 to-red-500 hover:scale-105 transition shadow-lg shadow-red-600/30">
+
+                <i class="fa-solid fa-trash mr-2"></i>
+
+                Delete
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Footer -->
+
+<footer class="mt-14 pb-8 text-center">
+
+    <div class="border-t border-purple-500/20 pt-6">
+
+        <p class="text-gray-500 text-sm">
+
+            Built with ❤️ using
+            <span class="text-purple-400">Node.js</span>,
+            <span class="text-purple-400">Express.js</span> &
+            <span class="text-purple-400">EJS</span>
+
+        </p>
+
+    </div>
+
+</footer>
+
+<script>
+
+const modal = document.getElementById("deleteModal");
+const confirmBtn = document.getElementById("confirmDelete");
+const cancelBtn = document.getElementById("cancelDelete");
+
+let currentForm = null;
+
+document.querySelectorAll(".delete-form").forEach(form=>{
+
+    form.addEventListener("submit",function(e){
+
+        e.preventDefault();
+
+        currentForm=this;
+
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+
+        document.body.style.overflow="hidden";
+
+    });
+
+});
+
+function closeModal(){
+
+    modal.classList.remove("flex");
+    modal.classList.add("hidden");
+
+    document.body.style.overflow="auto";
+
+}
+
+cancelBtn.addEventListener("click",closeModal);
+
+confirmBtn.addEventListener("click",()=>{
+
+    if(currentForm){
+
+        currentForm.submit();
+
+    }
+
+});
+
+modal.addEventListener("click",(e)=>{
+
+    if(e.target===modal){
+
+        closeModal();
+
+    }
+
+});
+
+document.addEventListener("keydown",(e)=>{
+
+    if(e.key==="Escape"){
+
+        closeModal();
+
+    }
+
+});
+
+</script>
 
 </body>
 
